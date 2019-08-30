@@ -2,6 +2,55 @@
 
 A showcase of my QA abilities.
 
+***
+
+## Setting up a Framework from Scratch
+
+1. Create a Maven project
+2. Create the following project structure:
+
+   ```text
+   - src
+     - main
+         - java
+           - com.h1ddengames.framework
+           - All framework files belong here
+         - resources
+           - Any properties files for different environments belong here
+           - Any properties files for custom reporting belong here
+     - test
+         - java
+           - com.h1ddengames
+             - com.shiftedtech
+               - spree
+                 - heatclinic
+                 - Any projects within the same company belong here
+         - resources
+           - log4j.properties
+    ```
+
+3. Add required dependencies into pom.xml
+4. Setup custom test reporting (Extent or Allure reporting or create your own reporting)
+5. Create a driver factory that supports ThreadLocal so all your tests can be run in parallel.
+   1. The driver factory should make creating and using a WebDriver as simple as possible.
+   2. Allow users to choose which WebDriver to use when creating a driver.
+   3. Allow users to choose between headless or GUI WebDrivers.
+6. Implement the POM (Page Object Model) framework.
+   1. Navigation (and other WebElements that remain the same from one page to another should be the base class/super class)
+   2. Each page of the company website should have it's own class and these classes should all extend the navigation page class.
+   3. Implement a function driven framework where each page has several steps of a test wrapped into it's own function.
+      1. For example in the Login page class, create a function that takes in a String username and String password. The username and password fields are cleared of any previous text stored. Next, the function enters those Strings into the username and password field respectively. Finally, the login button is clicked.
+7. Implement the BDD (Behavior Driven Development/Testing) framework.
+8. Implement Rest Assured for API testing.
+9. Implement Karate for BDD style API testing.
+10. Implement the JDBC (Java Database Connector) for database testing.
+    1. Has an added benefit of being used for Keyword and Data Driven Development/Testing.
+11. Generate tests using AssertJ, Selenium, and TestNG.
+12. Setup Selenium Grid and/or Browser Stack based on company's requirements.
+13. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
+
+***
+
 ## Project folder structure
 
 - The testcases package contains random test cases just to make sure that the project works with all the dependencies.
@@ -29,7 +78,9 @@ A showcase of my QA abilities.
             - log4j.properties
 ```
 
-## Setting up the pom.xml file
+***
+
+## Setting up the pom.xml file dependencies
 
 1. Go to <https://mvnrepository.com> and search for the following dependencies or include the dependencies below:
     - Selenium
@@ -161,15 +212,55 @@ A showcase of my QA abilities.
     </build>
     ```
 
-## Setting up BDD/BDT (Behavior Driven Development/Testing) framework
+***
 
-## Setting up POM (Page Object Model) framework
+## Setting up and Using Allure Reporting Framework
 
-## Using the BDD-POM hybrid Framework
+***
 
-## Creating API tests
+## Creating a Driver Factory
 
-## Creating database tests
+***
+
+## Setting up POM (Page Object Model) Framework
+
+***
+
+## Setting up BDD/BDT (Behavior Driven Development/Testing) Framework
+
+***
+
+## Using the BDD-POM Hybrid Framework
+
+***
+
+## Creating API Tests with Rest Assured
+
+***
+
+## Setting up and Using Karate
+
+***
+
+## Creating Database Tests with JDBC
+
+***
+
+## Creating Tests
+
+***
+
+## Setting up Selenium Grid
+
+***
+
+## Setting up Tests to run on Browser Stack
+
+***
+
+## Setting up Jenkins and Using Jenkins
+
+***
 
 ## Notes
 
