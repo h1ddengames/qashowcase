@@ -6,19 +6,28 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 
 public class TestScriptBase {
     protected WebDriver driver;
     protected String baseURL;
 
+    @Parameters({ "browser" })
     @BeforeClass
-    public void setup() {
+    public void setup(String browser) {
         // Downloading directly over the network is forbidden so you might
         // not be able to use WebDriverManager.
         WebDriverManager.chromedriver().version("76.0.3809.68").setup();
         WebDriverManager.firefoxdriver().version("0.24.0").setup();
 
-        driver = new ChromeDriver();
+        if(browser.toUpperCase().contentEquals("CH")) {
+            driver = new ChromeDriver();
+        } else if(browser.toUpperCase().contentEquals("FF")) {
+            driver = new FirefoxDriver();
+        } else {
+            driver = new ChromeDriver();
+        }
+
 
         // You will instead have to set up the driver locally
         // String driverPath = System.getProperty("user.dir")

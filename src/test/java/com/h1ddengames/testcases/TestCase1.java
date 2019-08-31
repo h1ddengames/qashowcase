@@ -15,6 +15,51 @@ public class TestCase1 extends TestScriptBase {
         baseURL = "http://spree.shiftedtech.com";
     }
 
+    // Methods for function driven tests
+    public void goToLoginPage() {
+        driver.navigate().to(baseURL);
+
+        WebElement loginLink = driver.findElement(By.linkText("Login"));
+        loginLink.click();
+    }
+
+    public void login(String email, String password) {
+        WebElement emailTextbox = driver.findElement(By.id("spree_user_email"));
+        emailTextbox.clear();
+        emailTextbox.sendKeys(email);
+
+        WebElement passwordTextbox = driver.findElement(By.id("spree_user_password"));
+        passwordTextbox.clear();
+        passwordTextbox.sendKeys(password);
+
+        WebElement loginButton = driver.findElement(By.name("commit"));
+        loginButton.click();
+    }
+
+    public void signout() {
+        WebElement logoutLink = driver.findElement(By.linkText("Logout"));
+        logoutLink.click();
+    }
+
+    public void checkLoginSuccessMessage() {
+        WebElement loginSuccessMessage = driver.findElement(
+                By.xpath("//div[@id='content']/div[contains(text(),'Logged in successfully')]"));
+        assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
+    }
+
+    public void checkLoginFailedMessage() {
+        WebElement loginFailedMessage = driver.findElement(
+                By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
+        //Assert.assertEquals(loginFailedMessage.getText(), "Invalid email or password.");
+        assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
+    }
+
+    public void checkSignoutSuccessMessage() {
+        WebElement signoutSuccessMessage = driver.findElement(
+                By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
+        Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
+    }
+
     @Test()
     public void positiveLoginCase() {
         driver.navigate().to(baseURL);
@@ -33,7 +78,7 @@ public class TestCase1 extends TestScriptBase {
         WebElement loginButton = driver.findElement(By.name("commit"));
         loginButton.click();
 
-        WebElement successMessage = driver.findElement(
+        WebElement loginSuccessMessage = driver.findElement(
                 By.xpath("//div[@id='content']/div[contains(text(),'Logged in successfully')]"));
 
         // A test can only be a test if you assert that something should happen.
@@ -44,26 +89,34 @@ public class TestCase1 extends TestScriptBase {
         // There are two ways to assert in this project: using TestNG's Assert class
         // or Hamcrest's MatcherAssert.
         // The following line is using TestNG's Assert class:
-        // Assert.assertEquals(successMessage.getText(), "Logged in successfully");
+        // Assert.assertEquals(loginSuccessMessage.getText(), "Logged in successfully");
 
         // The following line is using Hamcrest's Matcher class:
-        //assertThat(successMessage.getText(), equalTo("Logged in successfully"));
+        //assertThat(loginSuccessMessage.getText(), equalTo("Logged in successfully"));
 
         // NOTE: the custom matcher comes from: https://www.vogella.com/tutorials/Hamcrest/article.html
         // Since we are using regex, we can use the .* (PLEASE note the period before the star)
         // after "Logged in " to show we don't care what the rest of the line says
         // 'we just want the line to start with:' "Logged in "
         // The following line is using a custom matcher that extends Hamcrest matchers:
-        // assertThat(successMessage.getText(), regexMatches("Logged in .*"));
+        // assertThat(loginSuccessMessage.getText(), regexMatches("Logged in .*"));
 
-        // Assertj is an assertion library like Testng's Assert class or Hamcrest's assertThat method.
+        // Assertj is an assertion library like TestNG's Assert class or Hamcrest's assertThat method.
         // The difference between Assertj and the other assertions is that Assertj allows you to write
         // more "fluent" assertions. That just means it's more English with "proper" sentence structure.
         // The following line is using Assertj's assertion class.
-        assertThat(successMessage.getText()).startsWith("Logged").endsWith("successfully");
+        assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
 
         // We delete cookies so that other tests that use the same instance of WebDriver don't
         // get messed up due to previous login data.
+        driver.manage().deleteAllCookies();
+    }
+
+    @Test()
+    public void positiveLoginCaseWithFunctions() {
+        goToLoginPage();
+        login("shiftedtech0000@gmail.com", "shiftedtech");
+        checkLoginSuccessMessage();
         driver.manage().deleteAllCookies();
     }
 
@@ -89,6 +142,14 @@ public class TestCase1 extends TestScriptBase {
                 By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
         //Assert.assertEquals(loginFailedMessage.getText(), "Invalid email or password.");
         assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
+        driver.manage().deleteAllCookies();
+    }
+
+    @Test()
+    public void negativeLoginCaseWithFunctions() {
+        goToLoginPage();
+        login("shiftedtech0000@gmail.com", "shiftedtec");
+        checkLoginFailedMessage();
         driver.manage().deleteAllCookies();
     }
 
@@ -120,6 +181,16 @@ public class TestCase1 extends TestScriptBase {
         WebElement signoutSuccessMessage = driver.findElement(
                 By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
         Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
+        driver.manage().deleteAllCookies();
+    }
+
+    @Test()
+    public void logoutCaseWithFunctions() {
+        goToLoginPage();
+        login("shiftedtech0000@gmail.com", "shiftedtech");
+        checkLoginSuccessMessage();
+        signout();
+        checkSignoutSuccessMessage();
         driver.manage().deleteAllCookies();
     }
 }
