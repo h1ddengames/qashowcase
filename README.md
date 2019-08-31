@@ -35,19 +35,20 @@ A showcase of my QA abilities.
    1. The driver factory should make creating and using a WebDriver as simple as possible.
    2. Allow users to choose which WebDriver to use when creating a driver.
    3. Allow users to choose between headless or GUI WebDrivers.
-6. Implement the POM (Page Object Model) framework.
+6. Setup cross browser testing by creating a testng.xml runner that utilizes parameters.
+7. Implement the POM (Page Object Model) framework.
    1. Navigation (and other WebElements that remain the same from one page to another should be the base class/super class)
    2. Each page of the company website should have it's own class and these classes should all extend the navigation page class.
    3. Implement a function driven framework where each page has several steps of a test wrapped into it's own function.
       1. For example in the Login page class, create a function that takes in a String username and String password. The username and password fields are cleared of any previous text stored. Next, the function enters those Strings into the username and password field respectively. Finally, the login button is clicked.
-7. Implement the BDD (Behavior Driven Development/Testing) framework.
-8. Implement Rest Assured for API testing.
-9. Implement Karate for BDD style API testing.
-10. Implement the JDBC (Java Database Connector) for database testing.
+8. Implement the BDD (Behavior Driven Development/Testing) framework.
+9. Implement Rest Assured for API testing.
+10. Implement Karate for BDD style API testing.
+11. Implement the JDBC (Java Database Connector) for database testing.
     1. Has an added benefit of being used for Keyword and Data Driven Development/Testing.
-11. Generate tests using AssertJ, Selenium, and TestNG.
-12. Setup Selenium Grid and/or Browser Stack based on company's requirements.
-13. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
+12. Generate tests using AssertJ, Selenium, and TestNG.
+13. Setup Selenium Grid and/or Browser Stack based on company's requirements.
+14. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
 
 ***
 
@@ -221,6 +222,112 @@ A showcase of my QA abilities.
 ## Creating a Driver Factory
 
 ***
+
+## Setting up Cross Browser Testing with testng.xml
+
+1. Create an xml file called simple-tests.xml with the following code:
+
+    ```TestNG
+    <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+    <suite name="Simple Test Suite" verbose="1">
+        <test name="Chrome Test" >
+            <parameter name="browser" value="CH"/>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+        <test name="Firefox Test" >
+            <parameter name="browser" value="FF"/>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+    </suite>
+    ```
+
+2. Update the setup method (@BeforeClass marked method) to look like this:
+
+    ```java
+    @Parameters({ "browser" })
+    @BeforeClass
+    public void setup(String browser) {
+        // Downloading directly over the network is forbidden so you might
+        // not be able to use WebDriverManager.
+        WebDriverManager.chromedriver().version("76.0.3809.68").setup();
+        WebDriverManager.firefoxdriver().version("0.24.0").setup();
+
+        if(browser.toUpperCase().contentEquals("CH")) {
+            driver = new ChromeDriver();
+        } else if(browser.toUpperCase().contentEquals("FF")) {
+            driver = new FirefoxDriver();
+        } else {
+            driver = new ChromeDriver();
+        }
+    }
+    ```
+
+- The simple-tests.xml will run all the tests found in TestCase1 script file with Chrome first then rerun all the tests with Firefox.
+  - The simple-tests.xml can be updated to only run certain groups of tests (function, regression, etc) for each of the browsers:
+
+    ```TestNG
+    <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+    <suite name="Simple Test Suite" verbose="1">
+        <test name="Chrome Test" >
+            <parameter name="browser" value="CH"/>
+            <groups>
+                <run>
+                    <include name="functional"/>
+                </run>
+            </groups>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+        <test name="Firefox Test" >
+            <parameter name="browser" value="FF"/>
+            <groups>
+                <run>
+                    <include name="regression"/>
+                </run>
+            </groups>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+    </suite>
+    ```
+
+    - If you are specifying the type of test to be run, you have to mark your test methods like so:
+
+        ```java
+        @Test(groups = { "functional" })
+        public void positiveLoginCase() {
+            // code here
+        }
+        ```
+
+- Once a DriverFactory that supports ThreadLocal creation of WebDrivers has been implemented you can run both browsers in parallel (both browsers will open at the same time and all the tests will run on both browsers thus speeding up testing) with the following:
+
+    ```TestNG
+    <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+    <suite name="Simple Test Suite" parallel="tests" verbose="1">
+        <test name="Chrome Test" >
+            <parameter name="browser" value="CH"/>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+        <test name="Firefox Test" >
+            <parameter name="browser" value="FF"/>
+            <classes>
+                <class name="com.h1ddengames.testcases.TestCase1"/>
+            </classes>
+        </test>
+    </suite>
+    ```
 
 ## Setting up POM (Page Object Model) Framework
 

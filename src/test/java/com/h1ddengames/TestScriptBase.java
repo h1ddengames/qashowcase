@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
+import java.util.concurrent.TimeUnit;
 
 public class TestScriptBase {
     protected WebDriver driver;
@@ -28,6 +29,9 @@ public class TestScriptBase {
             driver = new ChromeDriver();
         }
 
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
 
         // You will instead have to set up the driver locally
         // String driverPath = System.getProperty("user.dir")

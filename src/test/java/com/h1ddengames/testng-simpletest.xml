@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Simple Test Suite" verbose="1">
+<suite name="Simple Test Suite" parallel="tests" verbose="1">
     <test name="Chrome Test" >
         <parameter name="browser" value="CH"/>
         <classes>
