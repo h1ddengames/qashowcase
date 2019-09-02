@@ -22,7 +22,7 @@ all these methods belong specifically to Spree rather than being able to be used
 The downside of using a function driven or POM framework is that you wont be able to use it
 for any other website than the one you're creating the functions for.
 */
-public class SpreeScriptBase extends ScriptBase {
+public class SpreeFunctionsScriptBase extends ScriptBase {
     @BeforeClass
     public void setURL() { baseURL = "http://spree.shiftedtech.com"; }
 

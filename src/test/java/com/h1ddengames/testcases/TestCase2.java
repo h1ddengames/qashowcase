@@ -1,14 +1,14 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.SpreeScriptBase;
+import com.h1ddengames.framework.SpreeFunctionsScriptBase;
 import org.testng.annotations.*;
 
 /*
 Contains test scripts using the function driven methods that also extends Selenium functionality.
 
-This keeps scripts small because all the logic is contained within the ScriptBase/SpreeScriptBase
+This will keep test scripts small because all the logic is contained within the ScriptBase/SpreeScriptBase
 */
-public class TestCase2 extends SpreeScriptBase {
+public class TestCase2 extends SpreeFunctionsScriptBase {
 
     @Test()
     public void positiveLoginCaseWithFunctions() {

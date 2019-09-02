@@ -11,6 +11,7 @@
         <classes>
             <class name="com.h1ddengames.testcases.TestCase1"/>
             <class name="com.h1ddengames.testcases.TestCase2"/>
+            <class name="com.h1ddengames.testcases.POMTestCase"/>
         </classes>
     </test>
     <test name="Firefox Test" >
@@ -23,6 +24,7 @@
         <classes>
             <class name="com.h1ddengames.testcases.TestCase1"/>
             <class name="com.h1ddengames.testcases.TestCase2"/>
+            <class name="com.h1ddengames.testcases.POMTestCase"/>
         </classes>
     </test>
 </suite>
