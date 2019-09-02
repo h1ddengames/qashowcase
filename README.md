@@ -6,29 +6,8 @@ A showcase of my QA abilities.
 
 ## Setting up a Framework from Scratch
 
-1. Create a Maven project
-2. Create the following project structure:
-
-   ```text
-   - src
-     - main
-         - java
-           - com.h1ddengames.framework
-           - All framework files belong here
-         - resources
-           - Any properties files for different environments belong here
-           - Any properties files for custom reporting belong here
-     - test
-         - java
-           - com.h1ddengames
-             - com.shiftedtech
-               - spree
-                 - heatclinic
-                 - Any projects within the same company belong here
-         - resources
-           - log4j.properties
-    ```
-
+1. Create a Maven project.
+2. Create proper project structure.
 3. Setup local maven repository, proxy, mirrors, and repositories.
 4. Add required dependencies into pom.xml
 5. Setup custom test reporting (Extent or Allure reporting or create your own reporting)
@@ -53,7 +32,7 @@ A showcase of my QA abilities.
 
 ***
 
-## Create a Maven project
+## 1. Create a Maven project
 
 1. Using IntelliJ IDEA, click on New > New Project.
 2. Select Maven > Next.
@@ -63,7 +42,7 @@ A showcase of my QA abilities.
 
 ***
 
-## Project folder structure
+## 2. Project folder structure
 
 - The testcases package contains random test cases just to make sure that the project works with all the dependencies.
 - The hybridtestcases package is to make sure the framework has been implemented properly.
@@ -73,26 +52,34 @@ A showcase of my QA abilities.
 - All framework scripts belong in src/main/java
 
     ```text
+    - pom.xml
     - src
-        - main
-            - java
-                - com.h1ddengames.framework
-            - resources
-        - test
-            - java
-                - com.h1ddengames
-                    - com.shiftedtech
-                        - spree
-                        - heatclinic
-                    - hybridtestcases
-                    - testcases
-            - resources
-                - log4j.properties
+      - main
+          - java
+            - com.h1ddengames.framework
+              - All framework files belong here
+              - spree.pages
+                - BasePage
+                - HomePage
+                - All other page object model files belong here
+          - resources
+            - Any properties files for different environments belong here
+            - Any properties files for custom reporting belong here
+      - test
+          - java
+            - com.h1ddengames
+              - com.shiftedtech
+                - spree
+                - heatclinic
+                - Any projects within the same company belong here
+          - resources
+            - log4j.properties
+            - testng-simpletest.xml
     ```
 
 ***
 
-## Setup local maven repository, proxy, mirrors, and repositories
+## 3. Setup local maven repository, proxy, mirrors, and repositories
 
 1. Download Maven CLI: <https://maven.apache.org/download.cgi>
 2. Create and add a MAVEN_HOME variable then put it in your path.
@@ -105,7 +92,7 @@ A showcase of my QA abilities.
 
 ***
 
-## Setting up the pom.xml file dependencies
+## 4. Setting up the pom.xml file dependencies
 
 1. Go to <https://mvnrepository.com> and search for the following dependencies or include the dependencies below:
     - Selenium
@@ -239,15 +226,15 @@ A showcase of my QA abilities.
 
 ***
 
-## Setting up and Using Allure Reporting Framework
+## 5. Setting up and Using Allure Reporting Framework
 
 ***
 
-## Creating a Driver Factory
+## 6. Creating a Driver Factory
 
 ***
 
-## Setting up Cross Browser Testing with testng.xml
+## 7. Setting up Cross Browser Testing with testng.xml
 
 1. Create an xml file called simple-tests.xml with the following code:
 
@@ -353,43 +340,215 @@ A showcase of my QA abilities.
     </suite>
     ```
 
-## Setting up POM (Page Object Model) Framework
+***
+
+## 8. Setting up POM (Page Object Model) Framework
+
+1. Create a package in /src/main/java based on the project.
+    - For example: spree.pages (${website}.pages)
+2. Create as many java files as there are pages to be tested.
+    1. BasePage
+    2. HomePage
+    3. LoginPage
+    4. CartPage
+    5. etc.
+3. Create a java file that will act as the composition class (holds all other page classes within it)
+    - Name it whatever you want (SpreeScriptBase or PageComposition)
+    - For this example, we'll use PageComposition
+4. Put the following code into the PageComposition class:
+
+    ```java
+    private HomePage homePage;
+    private LoginPage loginPage;
+    private CartPage cartPage;
+    // any other pages go here following the above structure.
+
+    // HomePage is different because if it's the first time creating a HomePage object then you need to use driver.navigate to go to the website.
+    // For all other times that you ask for the homePage, you get whatever is already in memory.
+    public HomePage homePage() {
+        if(homePage == null) {
+            homePage = new HomePage(driver);
+            // When homePage is null, that means the script has not used driver.navigate() to get
+            // to the homePage's baseURL. Calling any other method than navigate... will cause
+            // WebElements to not be found.
+            driver.navigate().to(homePage.baseURL);
+        }
+        return homePage;
+    }
+
+    public LoginPage loginPage() {
+        if(loginPage == null) {
+            loginPage = new LoginPage(driver);
+        }
+        return loginPage;
+    }
+
+    // ... all other pages follow the same structure as loginPage
+    ```
+
+5. For each of your pages you'll need to create a constructor with WebDriver as a parameter:
+
+    ```java
+    // The constructor should be the class name (WebDriver driver) with everything else the same.
+    public HomePage(WebDriver driver) {
+        // This line might be the only line required for you.
+        this.driver = driver;
+        // I include WebDriverWait because the framework that I'm choosing to make here uses WebDriverWait to find and use WebElements.
+        this.driverWait = new WebDriverWait(driver, ScriptBase.DEFAULT_WEB_DRIVER_WAIT);
+        // Same idea with JavaScriptExecutor. I choose to include it now so I can use it later.
+        this.driverJSExecutor = (JavascriptExecutor) driver;
+    }
+    ```
+
+6. Create function driven methods for each of the classes.
+    - For example: you don't want a login method on every single page if the login method requires access to the username/password textbox that's only available on the login page.
+    - For example this would be the login page:
+
+        ```java
+        public class LoginPage extends BasePage {
+
+            public LoginPage(WebDriver driver) {
+                this.driver = driver;
+                this.driverWait = new WebDriverWait(driver, ScriptBase.DEFAULT_WEB_DRIVER_WAIT);
+                this.driverJSExecutor = (JavascriptExecutor) driver;
+            }
+
+            public void login(String email, String password, boolean shouldLoginWork) {
+                goToLoginPage();
+                enterUsernameAndPassword(email, password);
+
+                if(shouldLoginWork) {
+                    checkLoginSuccessMessage();
+                } else {
+                    checkLoginFailedMessage();
+                }
+            }
+
+            public void enterUsernameAndPassword(String email, String password) {
+                enterDataIntoElement(By.id("spree_user_email"), email);
+                enterDataIntoElement(By.id("spree_user_password"), password);
+                clickElement(By.name("commit"));
+            }
+
+            public void checkLoginSuccessMessage() {
+                WebElement loginSuccessMessage = driver.findElement(
+                        By.xpath("//div[@id='content']/div[contains(text(),'Logged in successfully')]"));
+                assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
+            }
+
+            public void checkLoginFailedMessage() {
+                WebElement loginFailedMessage = driver.findElement(
+                        By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
+                MatcherAssert.assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
+            }
+        }
+        ```
+
+    - The BasePage should implement navigation methods since navigation will be the same across all pages. Notice how the logout function belongs in this class since you can always logout no matter what page you're on.
+
+        ```java
+        public class BasePage extends CommonSeleniumTasks {
+            public String baseURL = "http://spree.shiftedtech.com";
+
+            protected WebDriver driver;
+            protected WebDriverWait driverWait;
+            protected JavascriptExecutor driverJSExecutor;
+
+            @Override protected WebDriver getDriver() { return driver; }
+            @Override protected WebDriverWait getDriverWait() { return driverWait; }
+            @Override protected JavascriptExecutor getDriverJSExecutor() { return driverJSExecutor; }
+
+            public void goToHomePage() {
+                clickElement(By.linkText("Home"));
+            }
+            public void goToLoginPage() {
+                clickElement(By.linkText("Login"));
+            }
+            public void goToCart() {
+                clickElement(By.id("link-to-cart"));
+            }
+
+            public void logOut() {
+                clickElement(By.linkText("Logout"));
+                checkSignoutSuccessMessage();
+            }
+
+            public void checkSignoutSuccessMessage() {
+                WebElement signoutSuccessMessage = driver.findElement(
+                        By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
+                Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
+            }
+        }
+        ```
+
+7. Create your test scripts. While it might take one or two more lines compared to a pure function driven framework, you have: increased readability, code reuse by implementing POM, and avoided monolithic Java files. Code reuse because you've implemented OOP through POM (extends SpreeScriptBase, extends BasePage, extends CommonSeleniumTasks), readability because the methods seem more like an English sentence, and avoided monolithic Java files because each function will be contained within the Java file that fits the function (login belongs to the login page, while navigation belongs to every page, etc):
+
+    ```java
+    homePage().goToLoginPage();
+    loginPage().login("shiftedtech0000@gmail.com", "shiftedtech", true);
+
+    [from] home page, go to login page.
+    [when on] login page, login(using email, and password, and expect result).
+    ```
+
+    ```java
+    public class POMTestCase extends SpreeScriptBase {
+        @Test()
+        public void positiveLoginCaseWithFunctions() {
+            homePage().goToLoginPage();
+            loginPage().login("shiftedtech0000@gmail.com", "shiftedtech", true);
+        }
+
+        @Test()
+        public void negativeLoginCaseWithFunctions() {
+            homePage().goToLoginPage();
+            loginPage().login("shiftedtech0000@gmail.com", "shiftedtec", false);
+        }
+
+        @Test()
+        public void logoutCaseWithFunctions() {
+            homePage().goToLoginPage();
+            loginPage().login("shiftedtech0000@gmail.com", "shiftedtech", true);
+            loginPage().logOut();
+        }
+    }
+    ```
 
 ***
 
-## Setting up BDD/BDT (Behavior Driven Development/Testing) Framework
+## 9. Setting up BDD/BDT (Behavior Driven Development/Testing) Framework
 
 ***
 
-## Using the BDD-POM Hybrid Framework
+## 9 (cont). Using the BDD-POM Hybrid Framework
 
 ***
 
-## Creating API Tests with Rest Assured
+## 10. Creating API Tests with Rest Assured
 
 ***
 
-## Setting up and Using Karate
+## 11. Setting up and Using Karate
 
 ***
 
-## Creating Database Tests with JDBC
+## 12. Creating Database Tests with JDBC
 
 ***
 
-## Creating Tests
+## 13. Creating Tests
 
 ***
 
-## Setting up Selenium Grid
+## 14. Setting up Selenium Grid
 
 ***
 
-## Setting up Tests to run on Browser Stack
+## 14 (cont). Setting up Tests to run on Browser Stack
 
 ***
 
-## Setting up Jenkins and Using Jenkins
+## 15. Setting up Jenkins and Using Jenkins
 
 ***
 
