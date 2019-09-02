@@ -29,26 +29,37 @@ A showcase of my QA abilities.
            - log4j.properties
     ```
 
-3. Add required dependencies into pom.xml
-4. Setup custom test reporting (Extent or Allure reporting or create your own reporting)
-5. Create a driver factory that supports ThreadLocal so all your tests can be run in parallel.
+3. Setup local maven repository, proxy, mirrors, and repositories.
+4. Add required dependencies into pom.xml
+5. Setup custom test reporting (Extent or Allure reporting or create your own reporting)
+6. Create a driver factory that supports ThreadLocal so all your tests can be run in parallel.
    1. The driver factory should make creating and using a WebDriver as simple as possible.
    2. Allow users to choose which WebDriver to use when creating a driver.
    3. Allow users to choose between headless or GUI WebDrivers.
-6. Setup cross browser testing by creating a testng.xml runner that utilizes parameters.
-7. Implement the POM (Page Object Model) framework.
+7. Setup cross browser testing by creating a testng.xml runner that utilizes parameters.
+8. Implement the POM (Page Object Model) framework.
    1. Navigation (and other WebElements that remain the same from one page to another should be the base class/super class)
    2. Each page of the company website should have it's own class and these classes should all extend the navigation page class.
    3. Implement a function driven framework where each page has several steps of a test wrapped into it's own function.
       1. For example in the Login page class, create a function that takes in a String username and String password. The username and password fields are cleared of any previous text stored. Next, the function enters those Strings into the username and password field respectively. Finally, the login button is clicked.
-8. Implement the BDD (Behavior Driven Development/Testing) framework.
-9. Implement Rest Assured for API testing.
-10. Implement Karate for BDD style API testing.
-11. Implement the JDBC (Java Database Connector) for database testing.
+9. Implement the BDD (Behavior Driven Development/Testing) framework.
+10. Implement Rest Assured for API testing.
+11. Implement Karate for BDD style API testing.
+12. Implement the JDBC (Java Database Connector) for database testing.
     1. Has an added benefit of being used for Keyword and Data Driven Development/Testing.
-12. Generate tests using AssertJ, Selenium, and TestNG.
-13. Setup Selenium Grid and/or Browser Stack based on company's requirements.
-14. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
+13. Generate tests using AssertJ, Selenium, and TestNG.
+14. Setup Selenium Grid and/or Browser Stack based on company's requirements.
+15. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
+
+***
+
+## Create a Maven project
+
+1. Using IntelliJ IDEA, click on New > New Project.
+2. Select Maven > Next.
+3. Provide a GroupId in reverse order (if your company's url is google.com then you should make the GroupId "com.google")
+4. Provide an ArtifactId based on the project you are working on then click Next.
+5. Provide a project name and location then click Finish.
 
 ***
 
@@ -61,23 +72,36 @@ A showcase of my QA abilities.
 - All test scripts belong in src/test/java
 - All framework scripts belong in src/main/java
 
-```text
-- src
-    - main
-        - java
-            - com.h1ddengames.framework
-        - resources
-    - test
-        - java
-            - com.h1ddengames
-                - com.shiftedtech
-                    - spree
-                    - heatclinic
-                - hybridtestcases
-                - testcases
-        - resources
-            - log4j.properties
-```
+    ```text
+    - src
+        - main
+            - java
+                - com.h1ddengames.framework
+            - resources
+        - test
+            - java
+                - com.h1ddengames
+                    - com.shiftedtech
+                        - spree
+                        - heatclinic
+                    - hybridtestcases
+                    - testcases
+            - resources
+                - log4j.properties
+    ```
+
+***
+
+## Setup local maven repository, proxy, mirrors, and repositories
+
+1. Download Maven CLI: <https://maven.apache.org/download.cgi>
+2. Create and add a MAVEN_HOME variable then put it in your path.
+3. Go to MAVEN_HOME/conf and copy the settings.xml file to your user's .m2 folder.
+4. Change the settings.xml file to suit your company's requirements.
+   1. For example change your localRepository to a path on your computer rather than on the network drive that most companies will use.
+   2. Setup the proxy sever information if your company does not allow you to access the internet directly.
+   3. Use an internal repository if your company has one <https://maven.apache.org/guides/introduction/introduction-to-repositories.html>
+   4. Setup mirrors if required.
 
 ***
 
@@ -103,14 +127,14 @@ A showcase of my QA abilities.
 
     - For example:
 
-    ``` maven
-    <properties>
-        <java.version>11</java.version>
-        <selenium-java.version>3.141.59</selenium-java.version>
-        ... All the rest from step 1. ...
-        <maven-compiler.version>3.8.1</maven-compiler.version>
-    </properties>
-    ```
+        ``` maven
+        <properties>
+            <java.version>11</java.version>
+            <selenium-java.version>3.141.59</selenium-java.version>
+            ... All the rest from step 1. ...
+            <maven-compiler.version>3.8.1</maven-compiler.version>
+        </properties>
+        ```
 
 3. Update all the dependencies versions using the property variables created above:
 

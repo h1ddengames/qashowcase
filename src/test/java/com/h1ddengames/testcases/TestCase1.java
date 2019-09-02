@@ -1,63 +1,20 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.TestScriptBase;
+import com.h1ddengames.framework.ScriptBase;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
 import static com.h1ddengames.framework.matcher.RegexMatcher.*;
 import static org.assertj.core.api.Assertions.*;
 
-public class TestCase1 extends TestScriptBase {
+/*
+Contains simple test scripts using the most basic Selenium methods.
+*/
+public class TestCase1 extends ScriptBase {
     @BeforeClass
     public void setURL() {
         baseURL = "http://spree.shiftedtech.com";
-    }
-
-    // Methods for function driven tests
-    public void goToLoginPage() {
-        driver.navigate().to(baseURL);
-
-        WebElement loginLink = driver.findElement(By.linkText("Login"));
-        loginLink.click();
-    }
-
-    public void login(String email, String password) {
-        WebElement emailTextbox = driver.findElement(By.id("spree_user_email"));
-        emailTextbox.clear();
-        emailTextbox.sendKeys(email);
-
-        WebElement passwordTextbox = driver.findElement(By.id("spree_user_password"));
-        passwordTextbox.clear();
-        passwordTextbox.sendKeys(password);
-
-        WebElement loginButton = driver.findElement(By.name("commit"));
-        loginButton.click();
-    }
-
-    public void signout() {
-        WebElement logoutLink = driver.findElement(By.linkText("Logout"));
-        logoutLink.click();
-    }
-
-    public void checkLoginSuccessMessage() {
-        WebElement loginSuccessMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Logged in successfully')]"));
-        assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
-    }
-
-    public void checkLoginFailedMessage() {
-        WebElement loginFailedMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
-        //Assert.assertEquals(loginFailedMessage.getText(), "Invalid email or password.");
-        assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
-    }
-
-    public void checkSignoutSuccessMessage() {
-        WebElement signoutSuccessMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
-        Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
     }
 
     @Test()
@@ -106,18 +63,6 @@ public class TestCase1 extends TestScriptBase {
         // more "fluent" assertions. That just means it's more English with "proper" sentence structure.
         // The following line is using Assertj's assertion class.
         assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
-
-        // We delete cookies so that other tests that use the same instance of WebDriver don't
-        // get messed up due to previous login data.
-        driver.manage().deleteAllCookies();
-    }
-
-    @Test()
-    public void positiveLoginCaseWithFunctions() {
-        goToLoginPage();
-        login("shiftedtech0000@gmail.com", "shiftedtech");
-        checkLoginSuccessMessage();
-        driver.manage().deleteAllCookies();
     }
 
     @Test()
@@ -140,17 +85,8 @@ public class TestCase1 extends TestScriptBase {
 
         WebElement loginFailedMessage = driver.findElement(
                 By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
-        //Assert.assertEquals(loginFailedMessage.getText(), "Invalid email or password.");
-        assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
-        driver.manage().deleteAllCookies();
-    }
 
-    @Test()
-    public void negativeLoginCaseWithFunctions() {
-        goToLoginPage();
-        login("shiftedtech0000@gmail.com", "shiftedtec");
-        checkLoginFailedMessage();
-        driver.manage().deleteAllCookies();
+        assertThat(loginFailedMessage.getText(), regexMatches("Invalid .*"));
     }
 
     @Test()
@@ -181,16 +117,5 @@ public class TestCase1 extends TestScriptBase {
         WebElement signoutSuccessMessage = driver.findElement(
                 By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
         Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
-        driver.manage().deleteAllCookies();
-    }
-
-    @Test()
-    public void logoutCaseWithFunctions() {
-        goToLoginPage();
-        login("shiftedtech0000@gmail.com", "shiftedtech");
-        checkLoginSuccessMessage();
-        signout();
-        checkSignoutSuccessMessage();
-        driver.manage().deleteAllCookies();
     }
 }

@@ -5,9 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.h1ddengames</groupId>
-    <artifactId>project-setup</artifactId>
+    <artifactId>qashowcase</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- In order to add dependencies locally using Intellij IDEA,
+    go to File -> Project Structure -> Modules -> Click the plus button
+    -> Add jar or directories -> Select the jar or directory that contains your dependencies -->
+
+    <!-- You can configure where dependencies are downloaded to locally,
+    where dependencies should be downloaded from, where mirrors for dependencies are,
+    what proxy server should be used and more by using settings.xml that comes with
+    your Maven CLI install in the MAVEN_HOME/conf folder. -->
     <properties>
         <!-- Keep all the version numbers at the top to make it easier to upgrade -->
         <java.version>11</java.version>
@@ -86,9 +94,7 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
-            <scope>test</scope>
         </dependency>
-
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java
             This dependency allows a BDD framework to be created -->
@@ -160,7 +166,7 @@
                 <version>${maven-surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng-simpletest.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng-simpletest.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         --illegal-access=permit

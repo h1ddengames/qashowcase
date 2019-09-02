@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Simple Test Suite" parallel="tests" thread-count="5" verbose="1">
+    <test name="Chrome Test"> <!--parallel="methods" thread-count="3"-->
+        <parameter name="browser" value="CH"/>
+        <groups>
+            <run>
+                <exclude name="broken"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.h1ddengames.testcases.TestCase1"/>
+            <class name="com.h1ddengames.testcases.TestCase2"/>
+        </classes>
+    </test>
+    <test name="Firefox Test" >
+        <parameter name="browser" value="FF"/>
+        <groups>
+            <run>
+                <exclude name="broken"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.h1ddengames.testcases.TestCase1"/>
+            <class name="com.h1ddengames.testcases.TestCase2"/>
+        </classes>
+    </test>
+</suite>
