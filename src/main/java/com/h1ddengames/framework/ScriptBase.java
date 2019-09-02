@@ -2,6 +2,7 @@ package com.h1ddengames.framework;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,14 +10,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
-
 import java.util.concurrent.TimeUnit;
 
-import static org.assertj.core.api.Assertions.*;
-
-public class ScriptBase {
+/*
+Contains required variables/methods to set up and use WebDriver in test scripts.
+*/
+public class ScriptBase extends CommonSeleniumTasks {
     protected WebDriver driver;
     protected WebDriverWait driverWait;
+    protected JavascriptExecutor driverJSExecutor;
 
     protected String baseURL;
 
@@ -24,6 +26,10 @@ public class ScriptBase {
     public static int DEFAULT_IMPLICITLY_WAIT = 10;
     public static int DEFAULT_PAGE_LOAD_TIMEOUT = 15;
     public static int DEFAULT_SET_SCRIPT_TIMEOUT = 10;
+
+    @Override protected WebDriver getDriver() { return driver; }
+    @Override protected WebDriverWait getDriverWait() { return driverWait; }
+    @Override protected JavascriptExecutor getDriverJSExecutor() { return driverJSExecutor; }
 
     @Parameters({ "browser" })
     @BeforeClass
@@ -47,6 +53,7 @@ public class ScriptBase {
         }
 
         driverWait = new WebDriverWait(driver, DEFAULT_WEB_DRIVER_WAIT);
+        driverJSExecutor = (JavascriptExecutor) driver;
 
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(DEFAULT_IMPLICITLY_WAIT, TimeUnit.SECONDS);
@@ -69,7 +76,6 @@ public class ScriptBase {
     public void afterMethod() {
         // We delete cookies so that other tests that use the same instance of WebDriver don't
         // get messed up due to previous login data from the previous test method.
-
         driver.manage().deleteAllCookies();
     }
 
@@ -77,54 +83,6 @@ public class ScriptBase {
     public void tearDown() {
         try {
             driver.quit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void clickElement(By by) {
-        try {
-            // ExpectedConditions.elementToBeClickable returns WebElement
-            // if expected condition is true otherwise it will throw TimeoutException.
-            // It never returns null so we have to use a try/catch block to catch the exception.
-            WebElement clickableElement = driverWait.until(ExpectedConditions.elementToBeClickable(by));
-            clickableElement.click();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void enterDataIntoElement(By by, String data) {
-        // ExpectedConditions.and() returns a boolean rather than a WebElement.
-        try {
-            boolean isTextFieldReady = driverWait.until(
-                    ExpectedConditions.and(
-                            ExpectedConditions.visibilityOfElementLocated(by),
-                            ExpectedConditions.elementToBeClickable(by)
-                    )
-            );
-
-            // Once both conditions are satisfied, then we can store the WebElement into
-            // a variable and perform actions on it.
-            if(isTextFieldReady) {
-                WebElement textField = driver.findElement(by);
-                textField.click();
-                textField.clear();
-                textField.sendKeys(data);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // I do not recommend doing it this way because you as the automation framework creator will need to create
-    // all the different permutations of assertThat() such as isEqualTo(), startsWith(), endsWith(), etc.
-    // If you don't have complicated assertions or many types of assertions, then you can try making as many methods
-    // as required by your testers/script creators.
-    public void assertElementText(By by, String expectedText) {
-        try {
-            WebElement elementToVerifyText = driverWait.until(ExpectedConditions.visibilityOfElementLocated(by));
-            assertThat(elementToVerifyText.getText()).isEqualTo(expectedText);
         } catch (Exception e) {
             e.printStackTrace();
         }
