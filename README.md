@@ -1,7 +1,21 @@
 # QA Showcase
 
-A showcase of my QA abilities.
+A showcase of my QA abilities by creating an automation framework using Java, Selenium, TestNG. In short: this framework will be a BDD-POM hybrid framework with support for API and database testing.
 
+This framework will include the following:
+   - POM (Page Object Model) - To separate function driven methods into several classes as well as using PageFactory to find elements.
+   - Object Repository - To store WebElement locators in properties files.
+   - BDD/BDT (Behaviour Driven Development/Testing) - To abstract away the difficulty of creating test scripts by using Gherkin.
+   - Rest API Testing - To test REST API using Rest Assured.
+   - Database Testing - To test a mysql database using JDBC.
+   - Cross-browser Testing - To run tests on multiple browsers at the same time.
+   - Jenkins (CI/CD) - To run tests based on certain criteria (new code has been pushed, it is after work hours, etc)
+   - Selenium GRID/Browser Stack (parallel distributed testing) - To run tests on a distributed environment either locally (GRID) or on a service (Browser Stack).
+   
+This framework will be missing the following (for now):
+   - Mobile Testing
+   - KDD/KDT (Keyword Driven Development/Testing)
+   - DDD/DDT (Data Driven Development/Testing)
 ***
 
 ## Setting up a Framework from Scratch
