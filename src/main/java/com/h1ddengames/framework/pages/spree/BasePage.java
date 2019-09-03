@@ -1,12 +1,10 @@
-package com.h1ddengames.framework.spree.pages;
+package com.h1ddengames.framework.pages.spree;
 
-import com.h1ddengames.framework.CommonSeleniumTasks;
+import com.h1ddengames.framework.utils.CommonSeleniumTasks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 /*
 Contains navigation methods.
@@ -24,24 +22,12 @@ public class BasePage extends CommonSeleniumTasks {
     @Override protected WebDriverWait getDriverWait() { return driverWait; }
     @Override protected JavascriptExecutor getDriverJSExecutor() { return driverJSExecutor; }
 
-    public void goToHomePage() {
-        clickElement(By.linkText("Home"));
-    }
-    public void goToLoginPage() {
-        clickElement(By.linkText("Login"));
-    }
+    public void goToHomePage() { clickElement(By.linkText("Home")); }
+    public void goToLoginPage() { clickElement(By.linkText("Login")); }
     public void goToCart() {
         clickElement(By.id("link-to-cart"));
     }
-
     public void logOut() {
         clickElement(By.linkText("Logout"));
-        checkSignoutSuccessMessage();
-    }
-
-    public void checkSignoutSuccessMessage() {
-        WebElement signoutSuccessMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Signed out successfully.')]"));
-        Assert.assertEquals(signoutSuccessMessage.getText(), "Signed out successfully.");
     }
 }

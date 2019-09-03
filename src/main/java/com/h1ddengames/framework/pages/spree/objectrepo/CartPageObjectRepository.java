@@ -1,13 +1,13 @@
-package com.h1ddengames.framework.spree.pages;
+package com.h1ddengames.framework.pages.spree.objectrepo;
 
-import com.h1ddengames.framework.ScriptBase;
+import com.h1ddengames.framework.scriptbases.ScriptBase;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePage extends BasePage {
+public class CartPageObjectRepository extends BasePageObjectRepository {
 
-    public HomePage(WebDriver driver) {
+    public CartPageObjectRepository(WebDriver driver) {
         this.driver = driver;
         this.driverWait = new WebDriverWait(driver, ScriptBase.DEFAULT_WEB_DRIVER_WAIT);
         this.driverJSExecutor = (JavascriptExecutor) driver;

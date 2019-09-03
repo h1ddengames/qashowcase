@@ -1,6 +1,6 @@
-package com.h1ddengames.framework.spree.pages;
+package com.h1ddengames.framework.pages.spree;
 
-import com.h1ddengames.framework.ScriptBase;
+import com.h1ddengames.framework.scriptbases.ScriptBase;
 
 public class SpreeScriptBase extends ScriptBase {
     private HomePage homePage;

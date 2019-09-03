@@ -1,6 +1,6 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.ScriptBase;
+import com.h1ddengames.framework.scriptbases.ScriptBase;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.*;

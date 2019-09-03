@@ -1,13 +1,11 @@
-package com.h1ddengames.framework;
+package com.h1ddengames.framework.scriptbases;
 
+import com.h1ddengames.framework.utils.CommonSeleniumTasks;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +17,6 @@ public class ScriptBase extends CommonSeleniumTasks {
     protected WebDriver driver;
     protected WebDriverWait driverWait;
     protected JavascriptExecutor driverJSExecutor;
-
     protected String baseURL;
 
     public static int DEFAULT_WEB_DRIVER_WAIT = 10;
@@ -36,6 +33,15 @@ public class ScriptBase extends CommonSeleniumTasks {
     public void setup(@Optional String browser) {
         // @Optional is required so that scripts may be run from the Java file itself rather than
         // using testng.xml
+
+        String userDirectory = System.getProperty("user.dir");
+        objectRepositoryManager.load(
+                (userDirectory + "/src/main/resources/spree/SpreeNavigationObjectRepository.properties"),
+                (userDirectory + "/src/main/resources/spree/SpreeHomePageObjectRepository.properties"),
+                (userDirectory + "/src/main/resources/spree/SpreeLoginPageObjectRepository.properties")
+        );
+
+        //objectRepositoryManager.printAllProperties();
 
         // Downloading directly over the network is forbidden so you might
         // not be able to use WebDriverManager.

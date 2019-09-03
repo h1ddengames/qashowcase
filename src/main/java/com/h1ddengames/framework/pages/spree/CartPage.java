@@ -1,6 +1,6 @@
-package com.h1ddengames.framework.spree.pages;
+package com.h1ddengames.framework.pages.spree;
 
-import com.h1ddengames.framework.ScriptBase;
+import com.h1ddengames.framework.scriptbases.ScriptBase;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;

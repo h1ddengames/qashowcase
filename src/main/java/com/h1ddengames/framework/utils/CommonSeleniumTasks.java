@@ -1,4 +1,4 @@
-package com.h1ddengames.framework;
+package com.h1ddengames.framework.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,6 +16,7 @@ public abstract class CommonSeleniumTasks {
     protected abstract WebDriver getDriver();
     protected abstract WebDriverWait getDriverWait();
     protected abstract JavascriptExecutor getDriverJSExecutor();
+    protected PropertyFileObjectRepositoryManager objectRepositoryManager = PropertyFileObjectRepositoryManager.getInstance();
 
     public void clickElement(By by) {
         try {

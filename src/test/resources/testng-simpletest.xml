@@ -12,6 +12,7 @@
             <class name="com.h1ddengames.testcases.TestCase1"/>
             <class name="com.h1ddengames.testcases.TestCase2"/>
             <class name="com.h1ddengames.testcases.POMTestCase"/>
+            <class name="com.h1ddengames.testcases.POMWithObjectRepositoryTestCase"/>
         </classes>
     </test>
     <test name="Firefox Test" >
@@ -25,6 +26,7 @@
             <class name="com.h1ddengames.testcases.TestCase1"/>
             <class name="com.h1ddengames.testcases.TestCase2"/>
             <class name="com.h1ddengames.testcases.POMTestCase"/>
+            <class name="com.h1ddengames.testcases.POMWithObjectRepositoryTestCase"/>
         </classes>
     </test>
 </suite>

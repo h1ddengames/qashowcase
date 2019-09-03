@@ -1,6 +1,6 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.SpreeFunctionsScriptBase;
+import com.h1ddengames.framework.scriptbases.SpreeFunctionsScriptBase;
 import org.testng.annotations.*;
 
 /*

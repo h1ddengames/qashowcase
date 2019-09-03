@@ -1,6 +1,6 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.pages.spree.SpreeScriptBase;
+import com.h1ddengames.framework.pages.spree.objectrepo.SpreeObjectRepositoryScriptBase;
 import org.testng.annotations.Test;
 
 /*
@@ -13,23 +13,23 @@ the page where the function can be used. This means that non-technical people ca
 function from the homePage since the login function requires you to be on the loginPage. Additionally,
 this means that Page class files will be shorter due to the functions being spread out across multiple pages.
 */
-public class POMTestCase extends SpreeScriptBase {
+public class POMWithObjectRepositoryTestCase extends SpreeObjectRepositoryScriptBase {
     @Test()
-    public void positiveLoginCaseWithPOM() {
+    public void positiveLoginCaseWithObjectRepository() {
         homePage().goToLoginPage();
         loginPage().login("shiftedtech0000@gmail.com", "shiftedtech");
         homePage().checkLoginSuccessMessage();
     }
 
     @Test()
-    public void negativeLoginCaseWithPOM() {
+    public void negativeLoginCaseWithObjectRepository() {
         homePage().goToLoginPage();
         loginPage().login("shiftedtech0000@gmail.com", "shiftedtec");
         loginPage().checkLoginFailedMessage();
     }
 
     @Test()
-    public void logoutCaseWithPOM() {
+    public void logoutCaseWithObjectRepository() {
         homePage().goToLoginPage();
         loginPage().login("shiftedtech0000@gmail.com", "shiftedtech");
         homePage().checkLoginSuccessMessage();

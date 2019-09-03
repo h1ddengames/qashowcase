@@ -1,6 +1,6 @@
-package com.h1ddengames.framework.spree.pages;
+package com.h1ddengames.framework.pages.spree;
 
-import com.h1ddengames.framework.ScriptBase;
+import com.h1ddengames.framework.scriptbases.ScriptBase;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,15 +19,9 @@ public class LoginPage extends BasePage {
         this.driverJSExecutor = (JavascriptExecutor) driver;
     }
 
-    public void login(String email, String password, boolean shouldLoginWork) {
+    public void login(String email, String password) {
         goToLoginPage();
         enterUsernameAndPassword(email, password);
-
-        if(shouldLoginWork) {
-            checkLoginSuccessMessage();
-        } else {
-            checkLoginFailedMessage();
-        }
     }
 
     public void enterUsernameAndPassword(String email, String password) {
@@ -36,15 +30,9 @@ public class LoginPage extends BasePage {
         clickElement(By.name("commit"));
     }
 
-    public void checkLoginSuccessMessage() {
-        WebElement loginSuccessMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Logged in successfully')]"));
-        assertThat(loginSuccessMessage.getText()).startsWith("Logged").endsWith("successfully");
-    }
-
     public void checkLoginFailedMessage() {
         WebElement loginFailedMessage = driver.findElement(
-                By.xpath("//div[@id='content']/div[contains(text(),'Invalid email or password.')]"));
+                By.cssSelector(".alert-error"));
         MatcherAssert.assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
     }
 }

@@ -1,4 +1,4 @@
-package com.h1ddengames.framework;
+package com.h1ddengames.framework.scriptbases;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
