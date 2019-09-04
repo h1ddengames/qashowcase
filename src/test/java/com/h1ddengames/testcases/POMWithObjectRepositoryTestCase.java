@@ -1,6 +1,6 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.pages.spree.objectrepo.SpreeObjectRepositoryScriptBase;
+import com.h1ddengames.framework.pages.spree.objectrepoPOM.SpreeObjectRepositoryScriptBase;
 import org.testng.annotations.Test;
 
 /*

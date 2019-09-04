@@ -1,6 +1,6 @@
 package com.h1ddengames.testcases;
 
-import com.h1ddengames.framework.pages.spree.SpreeScriptBase;
+import com.h1ddengames.framework.pages.spree.basicPOM.SpreeScriptBase;
 import org.testng.annotations.Test;
 
 /*

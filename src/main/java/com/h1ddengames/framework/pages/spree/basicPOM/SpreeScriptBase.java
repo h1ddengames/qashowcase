@@ -1,4 +1,4 @@
-package com.h1ddengames.framework.pages.spree;
+package com.h1ddengames.framework.pages.spree.basicPOM;
 
 import com.h1ddengames.framework.scriptbases.ScriptBase;
 

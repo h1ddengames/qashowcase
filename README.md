@@ -1,6 +1,25 @@
 # QA Showcase
 
-A showcase of my QA abilities.
+A showcase of my QA abilities by creating an automation framework using Java, Selenium, TestNG. In short: this framework will be a BDD-POM hybrid framework with support for API and database testing.
+
+**Important note: in the process of building up the framework from scratch, it's unavoidable that there will be files leftover to represent what the framework looked like at an earlier point. Additionally, I have decided to keep multiple versions of the POM implementation within the framework. It is up to the automation architect to decide which version to implement based on the needs of the company they work for.**
+
+This framework will include the following:
+
+- POM (Page Object Model) - To separate function driven methods into several classes as well as using PageFactory to find elements.
+- Object Repository - To store WebElement locators in properties files.
+- BDD/BDT (Behavior Driven Development/Testing) - To abstract away the difficulty of creating test scripts by using Gherkin.
+- Rest API Testing - To test REST API using Rest Assured.
+- Database Testing - To test a mysql database using JDBC.
+- Cross-browser Testing - To run tests on multiple browsers at the same time.
+- Jenkins (CI/CD) - To run tests based on certain criteria (new code has been pushed, it is after work hours, etc)
+- Selenium GRID/Browser Stack (parallel distributed testing) - To run tests on a distributed environment either locally (GRID) or on a service (Browser Stack).
+
+This framework will be missing the following (for now):
+
+- Mobile Testing
+- KDD/KDT (Keyword Driven Development/Testing)
+- DDD/DDT (Data Driven Development/Testing)
 
 ***
 
@@ -343,6 +362,23 @@ A showcase of my QA abilities.
 ***
 
 ## 8. Setting up POM (Page Object Model) Framework
+
+**Important note: there are several ways to implement POM into a framework.**
+
+**Here are a couple examples:**
+
+1. Basic POM - You create Java files based on the names of the pages you are testing and each of these files contain function driven methods such as logging in or moving to another page. In a pure POM framework, test script creators use only the functions provided to them. Since the function implementation is done by the framework architect, the script creators do not need to worry or know about knowing Selenium locators.
+   1. BasePage - Contains all navigation functions (methods)
+   2. HomePage - Contains all the functions related to tasks on the home page.
+   3. LoginPage - Same as above except for the login page.
+   4. etc. - The amount of pages depends on the website being tested and the scope of your automation tests.
+2. POM with Object Repository - The Java files are created just like with basic POM but instead of having Selenium locators all across your page functions, you use property files located within the src/main/resources folder to contain them. The benefit of doing it this way over basic POM is that you get to keep all the locators in one place so if your application changes locators a lot from version to version, you can just update the locators in one place rather than search every file for them.
+3. POM with Excel Spreadsheet - The idea is the same as POM with Object Repository but instead of using properties file(s), you instead use an Excel spreadsheet to contain all the Selenium locators. **Please note that there is no "correct" way of implementing POM. You just have to decide which version is the best for the company/website.**
+4. POM with PageFactory - Now instead of having locators in a different location, you specify WebElements with locators at the top of each page file with the @FindBy annotation. Update the constructor of each page to use PageFactory to find each element through the @FindBy annotation.
+
+**If you want examples of all four types of POM then you'll need to view the project in an IDE.**
+
+**Here is an example of implementing the basic POM:**
 
 1. Create a package in /src/main/java based on the project.
     - For example: spree.pages (${website}.pages)

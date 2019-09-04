@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /*
 Contains simple test scripts using the most basic Selenium methods.
+THIS TEST SCRIPT SHOWS WHAT A TEST SCRIPT WOULD LOOK LIKE WITHOUT ANY FRAMEWORK.
 */
 public class TestCase1 extends ScriptBase {
     @BeforeClass

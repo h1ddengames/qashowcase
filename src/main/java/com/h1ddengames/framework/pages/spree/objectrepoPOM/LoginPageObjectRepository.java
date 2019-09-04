@@ -1,19 +1,17 @@
-package com.h1ddengames.framework.pages.spree;
+package com.h1ddengames.framework.pages.spree.objectrepoPOM;
 
 import com.h1ddengames.framework.scriptbases.ScriptBase;
 import org.hamcrest.MatcherAssert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class LoginPage extends BasePage {
+public class LoginPageObjectRepository extends BasePageObjectRepository {
 
-    public LoginPage(WebDriver driver) {
+    public LoginPageObjectRepository(WebDriver driver) {
         this.driver = driver;
         this.driverWait = new WebDriverWait(driver, ScriptBase.DEFAULT_WEB_DRIVER_WAIT);
         this.driverJSExecutor = (JavascriptExecutor) driver;
@@ -25,14 +23,13 @@ public class LoginPage extends BasePage {
     }
 
     public void enterUsernameAndPassword(String email, String password) {
-        enterDataIntoElement(By.id("spree_user_email"), email);
-        enterDataIntoElement(By.id("spree_user_password"), password);
-        clickElement(By.name("commit"));
+        enterDataIntoElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.EmailTextbox"), email);
+        enterDataIntoElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.PasswordTextbox"), password);
+        clickElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.LoginButton"));
     }
 
     public void checkLoginFailedMessage() {
-        WebElement loginFailedMessage = driver.findElement(
-                By.cssSelector(".alert-error"));
+        WebElement loginFailedMessage = driver.findElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.LoginFailAlert"));
         MatcherAssert.assertThat(loginFailedMessage.getText(), equalTo("Invalid email or password."));
     }
 }

@@ -1,4 +1,4 @@
-package com.h1ddengames.framework.pages.spree.objectrepo;
+package com.h1ddengames.framework.pages.spree.objectrepoPOM;
 
 import com.h1ddengames.framework.utils.CommonSeleniumTasks;
 import org.openqa.selenium.JavascriptExecutor;
