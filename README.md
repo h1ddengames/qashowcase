@@ -24,6 +24,12 @@ This framework will be missing the following (for now):
 - KDD/KDT (Keyword Driven Development/Testing) - If you wanted to implement this yourself, you have these option(s):
   - Create an Excel spreadsheet with a format that your test team can agree with.
 
+    <details>
+    <summary>
+    <i>Excel data format... Click me to display</i>
+    </summary>
+    <p>
+
     | Step | Locator                | Action      | Data                   |
     |------|------------------------|-------------|------------------------|
     | 1    | LINK_TEXT:Login        | CLICK       |                        |
@@ -32,28 +38,46 @@ This framework will be missing the following (for now):
     | 4    | NAME:commit            | CLICK       |                        |
     | 5    | CSS:.alert-success     | VERIFY_TEXT | Logged in successfully |
 
+    </p>
+    </details>
+
     - Use Apache POI to read this Excel data.
 
-    ```java
-    String file = <fileLocation>
-    ExcelReader reader = new ExcelReader(file);
-    String[][] data = reader.getExcelSheetData(0, true);
+        <details>
+        <summary>
+        <i>Reading Excel data code... Click me to display</i>
+        </summary>
+        <p>
 
-    for(int i = 0; i < data.length; i++) {
-        String index = data[i][0];
-        String locator = data[i][1];
-        String action = data[i][2];
-        String testData = data[i][3];
+        ```java
+        String file = <fileLocation>
+        ExcelReader reader = new ExcelReader(file);
+        String[][] data = reader.getExcelSheetData(0, true);
 
-        System.out.println(String.format("Index: %s Locator: [%s]  Action: %s  TestData: %s", index, locator, action, testData));
-    }
-    ```
+        for(int i = 0; i < data.length; i++) {
+            String index = data[i][0];
+            String locator = data[i][1];
+            String action = data[i][2];
+            String testData = data[i][3];
+
+            System.out.println(String.format("Index: %s Locator: [%s]  Action: %s  TestData: %s", index, locator, action, testData));
+        }
+        ```
+
+        </p>
+        </details>
 
 - DDD/DDT (Data Driven Development/Testing) - If you wanted to implement this yourself, you have these option(s):
   - Create a method that returns a two dimensional array then mark that method using TestNG's @DataProvider to feed this data into a parameterized test.
   - Use Apache POI to get data from an Excel spreadsheet then use that data in a parameterized test using TestNG's @DataProvider.
   - You can create a test script generator using Java where you feed the generator a bunch of test data. For each "unit" of test data that you input, it will create a test case using a "default" structure. With each different test, it will replace the parameters you want with the test data.
   - Example:
+
+    <details>
+    <summary>
+    <i>Test script generator... Click me to display</i>
+    </summary>
+    <p>
 
     ```java
     // Sample default structure
@@ -93,6 +117,9 @@ This framework will be missing the following (for now):
         homePage().verifyLoginSuccess();
     }
     ```
+
+    </p>
+    </details>
 
 ***
 
@@ -143,6 +170,12 @@ This framework will be missing the following (for now):
 - All test scripts belong in src/test/java
 - All framework scripts belong in src/main/java
 
+    <details>
+    <summary>
+    <i>Framework layout... Click me to display</i>
+    </summary>
+    <p>
+
     ```text
     - pom.xml
     - src
@@ -168,6 +201,9 @@ This framework will be missing the following (for now):
             - log4j.properties
             - testng-simpletest.xml
     ```
+
+    </p>
+    </details>
 
 ***
 
@@ -249,6 +285,12 @@ This framework will be missing the following (for now):
 
 5. The final pom.xml should look something like this:
 
+    <details>
+    <summary>
+    <i>Final pom.xml... Click me to display</i>
+    </summary>
+    <p>
+
     ``` maven
     <properties>
         <!-- Keep all the version numbers at the top to make it easier to upgrade -->
@@ -316,6 +358,9 @@ This framework will be missing the following (for now):
     </build>
     ```
 
+    </p>
+    </details>
+
 ***
 
 ## 5. Setting up and Using Allure Reporting Framework
@@ -373,34 +418,53 @@ This framework will be missing the following (for now):
 - The simple-tests.xml will run all the tests found in TestCase1 script file with Chrome first then rerun all the tests with Firefox.
   - The simple-tests.xml can be updated to only run certain groups of tests (function, regression, etc) for each of the browsers:
 
+    <details>
+    <summary>
+    <i>testng.xml... Click me to display</i>
+    </summary>
+    <p>
+
     ```TestNG
     <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-    <suite name="Simple Test Suite" verbose="1">
-        <test name="Chrome Test" >
+    <suite name="Simple Test Suite" parallel="tests" thread-count="5" verbose="1">
+        <test name="Chrome Test"> <!--parallel="methods" thread-count="3"-->
             <parameter name="browser" value="CH"/>
             <groups>
                 <run>
-                    <include name="functional"/>
+                    <exclude name="broken"/>
+                    <exclude name="unimplemented"/>
                 </run>
             </groups>
             <classes>
                 <class name="com.h1ddengames.testcases.TestCase1"/>
+                <class name="com.h1ddengames.testcases.TestCase2"/>
+                <class name="com.h1ddengames.testcases.POMTestCase"/>
+                <class name="com.h1ddengames.testcases.POMWithObjectRepositoryTestCase"/>
+                <class name="com.h1ddengames.testcases.POMWithPageFactoryTestCase"/>
             </classes>
         </test>
         <test name="Firefox Test" >
             <parameter name="browser" value="FF"/>
             <groups>
                 <run>
-                    <include name="regression"/>
+                    <exclude name="broken"/>
+                    <exclude name="unimplemented"/>
                 </run>
             </groups>
             <classes>
                 <class name="com.h1ddengames.testcases.TestCase1"/>
+                <class name="com.h1ddengames.testcases.TestCase2"/>
+                <class name="com.h1ddengames.testcases.POMTestCase"/>
+                <class name="com.h1ddengames.testcases.POMWithObjectRepositoryTestCase"/>
+                <class name="com.h1ddengames.testcases.POMWithPageFactoryTestCase"/>
             </classes>
         </test>
     </suite>
     ```
+
+    </p>
+    </details>
 
     - If you are specifying the type of test to be run, you have to mark your test methods like so:
 
@@ -408,6 +472,14 @@ This framework will be missing the following (for now):
         @Test(groups = { "functional" })
         public void positiveLoginCase() {
             // code here
+        }
+
+        @Test(groups = { "broken" }) {
+            // some broken test that will get ignored here.
+        }
+
+        @Test(groups = { "unimplemented" }) {
+            // some test that needs to be implemented here.
         }
         ```
 
@@ -466,6 +538,12 @@ This framework will be missing the following (for now):
     - For this example, we'll use PageComposition
 4. Put the following code into the PageComposition class:
 
+    <details>
+    <summary>
+    <i>Page composition class... Click me to display</i>
+    </summary>
+    <p>
+
     ```java
     private HomePage homePage;
     private LoginPage loginPage;
@@ -495,6 +573,9 @@ This framework will be missing the following (for now):
     // ... all other pages follow the same structure as loginPage
     ```
 
+    </p>
+    </details>
+
 5. For each of your pages you'll need to create a constructor with WebDriver as a parameter:
 
     ```java
@@ -512,6 +593,12 @@ This framework will be missing the following (for now):
 6. Create function driven methods for each of the classes.
     - For example: you don't want a login method on every single page if the login method requires access to the username/password textbox that's only available on the login page.
     - For example this would be the login page:
+
+        <details>
+        <summary>
+        <i>LoginPage... Click me to display</i>
+        </summary>
+        <p>
 
         ```java
         public class LoginPage extends BasePage {
@@ -553,7 +640,16 @@ This framework will be missing the following (for now):
         }
         ```
 
+        </p>
+        </details>
+
     - The BasePage should implement navigation methods since navigation will be the same across all pages. Notice how the logout function belongs in this class since you can always logout no matter what page you're on.
+
+        <details>
+        <summary>
+        <i>BasePage... Click me to display</i>
+        </summary>
+        <p>
 
         ```java
         public class BasePage extends CommonSeleniumTasks {
@@ -589,6 +685,9 @@ This framework will be missing the following (for now):
             }
         }
         ```
+
+        </p>
+        </details>
 
 7. Create your test scripts. While it might take one or two more lines compared to a pure function driven framework, you have: increased readability, code reuse by implementing POM, and avoided monolithic Java files. Code reuse because you've implemented OOP through POM (extends SpreeScriptBase, extends BasePage, extends CommonSeleniumTasks), readability because the methods seem more like an English sentence, and avoided monolithic Java files because each function will be contained within the Java file that fits the function (login belongs to the login page, while navigation belongs to every page, etc):
 
