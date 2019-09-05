@@ -26,7 +26,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>Excel data format... Click me to display</i>
+    <b><i>Excel keyword framework data format... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -45,7 +45,7 @@ This framework will be missing the following (for now):
 
         <details>
         <summary>
-        <i>Reading Excel data code... Click me to display</i>
+        <b><i>Reading Excel data code... <u>click me to display</u></i></b>
         </summary>
         <p>
 
@@ -75,7 +75,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>Test script generator... Click me to display</i>
+    <b><i>Test script generator... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -172,7 +172,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>Framework layout... Click me to display</i>
+    <b><i>Framework layout... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -287,7 +287,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>Final pom.xml... Click me to display</i>
+    <b><i>Final pom.xml... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -420,7 +420,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>testng.xml... Click me to display</i>
+    <b><i>testng.xml... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -540,7 +540,7 @@ This framework will be missing the following (for now):
 
     <details>
     <summary>
-    <i>Page composition class... Click me to display</i>
+    <b><i>Page composition class... <u>click me to display</u></i></b>
     </summary>
     <p>
 
@@ -596,7 +596,7 @@ This framework will be missing the following (for now):
 
         <details>
         <summary>
-        <i>LoginPage... Click me to display</i>
+        <b><i>LoginPage... <u>click me to display</u></i></b>
         </summary>
         <p>
 
@@ -647,7 +647,7 @@ This framework will be missing the following (for now):
 
         <details>
         <summary>
-        <i>BasePage... Click me to display</i>
+        <b><i>BasePage... <u>click me to display</u></i></b>
         </summary>
         <p>
 
