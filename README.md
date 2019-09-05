@@ -2,7 +2,7 @@
 
 A showcase of my QA abilities by creating an automation framework using Java, Selenium, TestNG. In short: this framework will be a BDD-POM hybrid framework with support for API and database testing.
 
-**Important note: in the process of building up the framework from scratch, it's unavoidable that there will be files leftover to represent what the framework looked like at an earlier point. Additionally, I have decided to keep multiple versions of the POM implementation within the framework. It is up to the automation architect to decide which version to implement based on the needs of the company they work for.**
+**Important note: in the process of building up the framework from scratch, it's unavoidable that there will be files leftover to represent what the framework looked like at an earlier point. Additionally, I have decided to keep multiple versions of the POM implementation within the framework. It is up to the automation framework architect to decide which version to implement based on the needs of the company they work for.**
 
 This framework will include the following:
 
@@ -17,9 +17,82 @@ This framework will include the following:
 
 This framework will be missing the following (for now):
 
-- Mobile Testing
-- KDD/KDT (Keyword Driven Development/Testing)
-- DDD/DDT (Data Driven Development/Testing)
+- **Note that while I provide only these options, there may be many more. There is no right or wrong way of implementing these types of frameworks, it all just depends on your situation (the website being tested, your script creators, complexity of the test cases, etc)**
+
+- Mobile Testing - If you wanted to implement this yourself, you have these option(s):
+  - You can use Appium (which has similar syntax as Selenium) in order to do mobile testing.
+- KDD/KDT (Keyword Driven Development/Testing) - If you wanted to implement this yourself, you have these option(s):
+  - Create an Excel spreadsheet with a format that your test team can agree with.
+
+    | Step | Locator                | Action      | Data                   |
+    |------|------------------------|-------------|------------------------|
+    | 1    | LINK_TEXT:Login        | CLICK       |                        |
+    | 2    | ID:spree_user_email    | SEND_KEYS   | shift@gmail.com        |
+    | 3    | ID:spree_user_password | SEND_KEYS   | shiftedtech            |
+    | 4    | NAME:commit            | CLICK       |                        |
+    | 5    | CSS:.alert-success     | VERIFY_TEXT | Logged in successfully |
+
+    - Use Apache POI to read this Excel data.
+
+    ```java
+    String file = <fileLocation>
+    ExcelReader reader = new ExcelReader(file);
+    String[][] data = reader.getExcelSheetData(0, true);
+
+    for(int i = 0; i < data.length; i++) {
+        String index = data[i][0];
+        String locator = data[i][1];
+        String action = data[i][2];
+        String testData = data[i][3];
+
+        System.out.println(String.format("Index: %s Locator: [%s]  Action: %s  TestData: %s", index, locator, action, testData));
+    }
+    ```
+
+- DDD/DDT (Data Driven Development/Testing) - If you wanted to implement this yourself, you have these option(s):
+  - Create a method that returns a two dimensional array then mark that method using TestNG's @DataProvider to feed this data into a parameterized test.
+  - Use Apache POI to get data from an Excel spreadsheet then use that data in a parameterized test using TestNG's @DataProvider.
+  - You can create a test script generator using Java where you feed the generator a bunch of test data. For each "unit" of test data that you input, it will create a test case using a "default" structure. With each different test, it will replace the parameters you want with the test data.
+  - Example:
+
+    ```java
+    // Sample default structure
+    @Test()
+    public void test<id>() {
+        homePage.goToLoginPage();
+        loginPage().login(<username>, <password>);
+        homePage().verifyLoginSuccess();
+    }
+
+    // Test script generator will generate the following:
+    // Auto generated test script
+    @Test()
+    public void test1() {
+        homePage.goToLoginPage();
+        loginPage().login("shift@gmail.com", "password");
+        homePage().verifyLoginSuccess();
+    }
+
+    // Auto generated test script
+    @Test()
+    public void test2() {
+        homePage.goToLoginPage();
+        loginPage().login("shiftqa@gmail.com", "password1");
+        homePage().verifyLoginSuccess();
+    }
+
+    .
+    .
+    .
+
+    // Auto generated test script
+    @Test()
+    public void test999() {
+        homePage.goToLoginPage();
+        loginPage().login("shiftqa00312@gmail.com", "someR32#ndao@OmPaswowerd");
+        homePage().verifyLoginSuccess();
+    }
+    ```
 
 ***
 
