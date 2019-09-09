@@ -181,22 +181,25 @@ This framework will be missing the following (for now):
     - src
       - main
           - java
-            - com.h1ddengames.framework
-              - All framework files belong here
-              - spree.pages
+            - com.h1ddengames.framework // All framework files belong here
+              - pages
                 - BasePage
                 - HomePage
+                - LoginPage
                 - All other page object model files belong here
+              - steps
+                - All step definition files belong here
+              - utils
+                - All utility files belong here
           - resources
-            - Any properties files for different environments belong here
+            - All properties files for different environments belong here
             - Any properties files for custom reporting belong here
+
       - test
           - java
             - com.h1ddengames
-              - com.shiftedtech
-                - spree
-                - heatclinic
-                - Any projects within the same company belong here
+                - bdd
+                  - All bdd runner files go here
           - resources
             - log4j.properties
             - testng-simpletest.xml
@@ -725,6 +728,102 @@ This framework will be missing the following (for now):
 ***
 
 ## 9. Setting up BDD/BDT (Behavior Driven Development/Testing) Framework
+
+1. First setup Intellij to utilize Cucumber JVM
+   1. Add these dependencies to your pom.xml:
+
+        <details>
+        <summary>
+        <b><i>Dependencies... <u>click me to display</u></i></b>
+        </summary>
+        <p>
+
+        ```maven
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java
+            This dependency allows a BDD framework to be created -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-java.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng
+            This dependency allows a BDD framework to be created -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber-testng.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting
+            This dependency allows better reporting but only for BDD tests -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>maven-cucumber-reporting</artifactId>
+            <version>${cucumber-reporting.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-expressions -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-expressions</artifactId>
+            <version>${cucumber-expressions.version}</version>
+        </dependency>
+        ```
+
+        </p>
+        </details>
+
+   2. File > Settings > Plugins > Marketplace. Download Cucumber for Java and Gherkin. DO NOT INSTALL Substeps Intellij Plugin. Restart IDE after install.
+2. Create a feature file in src/test/resources/features:
+
+    ```gherkin
+    Feature: Spree Login Functionality - 1
+
+    Scenario: 1. Valid user with valid password
+        Given an unvalidated user
+        When user browses to "http://spree.shiftedtech.com"
+        Then home page will display
+        When user clicks "Navigation.Login" link
+        Then login page will display
+        When user enters "shiftqa01@gmail.com" into "LoginPage.EmailTextbox"
+        And user enters "shiftedtech" at "LoginPage.PasswordTextbox"
+        And user clicks on "LoginPage.LoginButton" button
+        Then home page will display
+        And login success message displays in "HomePage.LoginSuccessAlert" as "Logged in Successfully"
+    ```
+
+3. Right click on the word "Feature" within the feature file then select Run "Feature:..."
+4. If you are unable to right click on the Feature keyword on the feature file, Go to File > Project Structure > Modules > Dependencies. Then for every io.cucumber dependency you find, set the Scope to Test. Retry the previous step.
+5. Copy all the snippets that were generated in the output.
+6. Reset every io.cucumber dependency Scope to Compile.
+7. Create a step definition file within src/main/java/steps and paste the snippets that you copied.
+8. Create a BDDRunner file in src/main/java/steps
+
+    ```java
+    package com.h1ddengames.com.shiftedtech.spree;
+
+
+    import io.cucumber.testng.*;
+
+    @CucumberOptions(
+        //dryRun = true, /* Run just to check if the syntax if fine */
+        //tags = { "@Acceptance" }, /* Will run tests that only has the acceptance tag */
+        //tags = { "@Acceptance, @Functional"}, /* Will run any test that has both the acceptance tag and the functional tag */
+        //monochrome = true, /* */
+        features = {"src/test/resources/features/spree"}, /* Specify where the feature files are located */
+        glue = "com/h1ddengames/framework/steps/spree", /* Where are the step definitions located. Do not type /src/java/[main/test] */
+        plugin = {
+                "pretty:target/cucumber-test-report/cucumber-pretty.txt",
+                "html:target/cucumber-test-report/",
+                "json:target/cucumber-test-report/cucumber-report.json",
+                "junit:target/cucumber-test-report/test-report.xml"
+        }
+    )
+    public class BDDRunner extends AbstractTestNGCucumberTests { }
+    ```
+9. Implement the step definitions.
+10. Right click on the BDDRunner then select Run BDDRunner.
 
 ***
 

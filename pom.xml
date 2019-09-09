@@ -29,6 +29,7 @@
         <cucumber-java.version>4.7.1</cucumber-java.version>
         <cucumber-testng.version>4.7.1</cucumber-testng.version>
         <cucumber-reporting.version>4.9.0</cucumber-reporting.version>
+        <cucumber-expressions.version>8.0.0</cucumber-expressions.version>
         <slf4j-api.version>1.7.28</slf4j-api.version>
         <slf4j-log4j12.version>1.7.28</slf4j-log4j12.version>
         <maven-surefire.version>3.0.0-M3</maven-surefire.version>
@@ -118,6 +119,13 @@
             <groupId>net.masterthought</groupId>
             <artifactId>maven-cucumber-reporting</artifactId>
             <version>${cucumber-reporting.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-expressions -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-expressions</artifactId>
+            <version>${cucumber-expressions.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
