@@ -6,6 +6,12 @@ A showcase of my QA abilities by creating an automation framework using Java, Se
 
 This framework will include the following:
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
 - POM (Page Object Model) - To separate function driven methods into several classes as well as using PageFactory to find elements.
 - Object Repository - To store WebElement locators in properties files.
 - BDD/BDT (Behavior Driven Development/Testing) - To abstract away the difficulty of creating test scripts by using Gherkin.
@@ -15,7 +21,16 @@ This framework will include the following:
 - Jenkins (CI/CD) - To run tests based on certain criteria (new code has been pushed, it is after work hours, etc)
 - Selenium GRID/Browser Stack (parallel distributed testing) - To run tests on a distributed environment either locally (GRID) or on a service (Browser Stack).
 
+</p>
+</details>
+
 This framework will be missing the following (for now):
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 - **Note that while I provide only these options, there may be many more. There is no right or wrong way of implementing these types of frameworks, it all just depends on your situation (the website being tested, your script creators, complexity of the test cases, etc)**
 
@@ -121,9 +136,18 @@ This framework will be missing the following (for now):
     </p>
     </details>
 
+</p>
+</details>
+
 ***
 
 ## Setting up a Framework from Scratch
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. Create a Maven project.
 2. Create proper project structure.
@@ -149,9 +173,18 @@ This framework will be missing the following (for now):
 14. Setup Selenium Grid and/or Browser Stack based on company's requirements.
 15. Setup Jenkins or Bamboo as a CI/CD pipeline based on company's requirements.
 
+</p>
+</details>
+
 ***
 
 ## 1. Create a Maven project
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. Using IntelliJ IDEA, click on New > New Project.
 2. Select Maven > Next.
@@ -159,9 +192,18 @@ This framework will be missing the following (for now):
 4. Provide an ArtifactId based on the project you are working on then click Next.
 5. Provide a project name and location then click Finish.
 
+</p>
+</details>
+
 ***
 
 ## 2. Project folder structure
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 - The testcases package contains random test cases just to make sure that the project works with all the dependencies.
 - The hybridtestcases package is to make sure the framework has been implemented properly.
@@ -208,9 +250,18 @@ This framework will be missing the following (for now):
     </p>
     </details>
 
+</p>
+</details>
+
 ***
 
 ## 3. Setup local maven repository, proxy, mirrors, and repositories
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. Download Maven CLI: <https://maven.apache.org/download.cgi>
 2. Create and add a MAVEN_HOME variable then put it in your path.
@@ -221,9 +272,18 @@ This framework will be missing the following (for now):
    3. Use an internal repository if your company has one <https://maven.apache.org/guides/introduction/introduction-to-repositories.html>
    4. Setup mirrors if required.
 
+</p>
+</details>
+
 ***
 
 ## 4. Setting up the pom.xml file dependencies
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. Go to <https://mvnrepository.com> and search for the following dependencies or include the dependencies below:
     - Selenium
@@ -364,17 +424,44 @@ This framework will be missing the following (for now):
     </p>
     </details>
 
+</p>
+</details>
+
 ***
 
 ## 5. Setting up and Using Allure Reporting Framework
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
 
 ***
 
 ## 6. Creating a Driver Factory
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
+
 ***
 
 ## 7. Setting up Cross Browser Testing with testng.xml
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. Create an xml file called simple-tests.xml with the following code:
 
@@ -507,9 +594,18 @@ This framework will be missing the following (for now):
     </suite>
     ```
 
+</p>
+</details>
+
 ***
 
 ## 8. Setting up POM (Page Object Model) Framework
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 **Important note: there are several ways to implement POM into a framework.**
 
@@ -725,9 +821,18 @@ This framework will be missing the following (for now):
     }
     ```
 
+</p>
+</details>
+
 ***
 
 ## 9. Setting up BDD/BDT (Behavior Driven Development/Testing) Framework
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 1. First setup Intellij to utilize Cucumber JVM
    1. Add these dependencies to your pom.xml:
@@ -825,41 +930,122 @@ This framework will be missing the following (for now):
 9. Implement the step definitions.
 10. Right click on the BDDRunner then select Run BDDRunner.
 
+</p>
+</details>
+
 ***
 
 ## 9 (cont). Using the BDD-POM Hybrid Framework
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
 
 ***
 
 ## 10. Creating API Tests with Rest Assured
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
+
 ***
 
 ## 11. Setting up and Using Karate
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
 
 ***
 
 ## 12. Creating Database Tests with JDBC
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
+
 ***
 
 ## 13. Creating Tests
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
 
 ***
 
 ## 14. Setting up Selenium Grid
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
+
 ***
 
 ## 14 (cont). Setting up Tests to run on Browser Stack
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
 
 ***
 
 ## 15. Setting up Jenkins and Using Jenkins
 
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
+
+</p>
+</details>
+
 ***
 
 ## Notes
+
+<details>
+<summary>
+<b><i><u>Click me to display this section</u></i></b>
+</summary>
+<p>
 
 - A test can only be a test if you assert that something should happen.
   - For example:
@@ -873,3 +1059,8 @@ This framework will be missing the following (for now):
   - Example of false positive: being able to log in with an invalid username and/or password.
   - Example of false negative: not being able to log in with a valid username and password.
 - Once the bug slips through this crack, it becomes much harder to find later on.
+
+</p>
+</details>
+
+***
