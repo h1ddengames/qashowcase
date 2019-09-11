@@ -19,9 +19,9 @@ public class ScriptBase extends CommonSeleniumTasks {
     protected JavascriptExecutor driverJSExecutor;
     protected String baseURL;
 
-    public static int DEFAULT_WEB_DRIVER_WAIT = 5;
-    public static int DEFAULT_IMPLICITLY_WAIT = 3;
-    public static int DEFAULT_PAGE_LOAD_TIMEOUT = 5;
+    public static int DEFAULT_WEB_DRIVER_WAIT = 7;
+    public static int DEFAULT_IMPLICITLY_WAIT = 7;
+    public static int DEFAULT_PAGE_LOAD_TIMEOUT = 7;
     public static int DEFAULT_SET_SCRIPT_TIMEOUT = 5;
 
     @Override protected WebDriver getDriver() { return driver; }
