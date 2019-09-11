@@ -22,7 +22,7 @@ public class BasePagePageFactory extends CommonSeleniumTasks {
     @FindBy(linkText = "Home") private WebElement homeButton;
     @FindBy(linkText = "Login") private WebElement loginButton;
     @FindBy(css=".cart-info") private WebElement cartButton;
-    @FindBy(id = "Logout") private WebElement logoutButton;
+    @FindBy(linkText = "Logout") private WebElement logoutButton;
 
     @Override protected WebDriver getDriver() { return driver; }
     @Override protected WebDriverWait getDriverWait() { return driverWait; }

@@ -35,8 +35,8 @@ public class SpreeFunctionsScriptBase extends ScriptBase {
     }
 
     public void enterUsernameAndPassword(String email, String password) {
-        enterDataIntoElement(By.id("spree_user_email"), email);
-        enterDataIntoElement(By.id("spree_user_password"), password);
+        enterDataIntoTextbox(By.id("spree_user_email"), email);
+        enterDataIntoTextbox(By.id("spree_user_password"), password);
         clickElement(By.name("commit"));
     }
 

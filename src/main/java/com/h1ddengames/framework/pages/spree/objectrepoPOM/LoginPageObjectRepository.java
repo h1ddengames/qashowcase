@@ -23,8 +23,8 @@ public class LoginPageObjectRepository extends BasePageObjectRepository {
     }
 
     public void enterUsernameAndPassword(String email, String password) {
-        enterDataIntoElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.EmailTextbox"), email);
-        enterDataIntoElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.PasswordTextbox"), password);
+        enterDataIntoTextbox(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.EmailTextbox"), email);
+        enterDataIntoTextbox(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.PasswordTextbox"), password);
         clickElement(objectRepositoryManager.getByFromObjectRepositoryLocator("LoginPage.LoginButton"));
     }
 
