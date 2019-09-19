@@ -30,6 +30,9 @@ public abstract class CommonSeleniumTasks {
 
     /**
      * Check to see if a WebElement exists on the page.
+     * Using this instead of ExpectedWait has the benefit of not throwing an error but with the draw back of not polling
+     * multiple times until a given timeout. This means that if an element shows up on a page after using this method,
+     * you'll have an incorrect result.
      * @param by The locator used to find the WebElement.
      * @return True if the element is found, false if the element is not found.
      */

@@ -906,7 +906,7 @@ This framework will be missing the following (for now):
 8. Create a BDDRunner file in src/main/java/steps
 
     ```java
-    package com.h1ddengames.com.shiftedtech.spree;
+    package com.h1ddengames.com.shiftedtech.bdd.spree;
 
 
     import io.cucumber.testng.*;

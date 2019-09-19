@@ -7,6 +7,14 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * This class reads properties files by using a key-value pair system. (Give a key, get a value)
+ * This class will need to be modified if you use a different format for your properties file.
+ * Example: In SpreeHomePageObjectRepository.properties I have HomePage.LoginSuccessAlert=CSS_SELECTOR:.alert-success
+ * Where the left side of the equal sign is the key (HomePage.LoginSuccessAlert)
+ * while the right side is the value (CSS_SELECTOR:.alert-success)
+ * The ":" character is being used to split the value into two sub values: the locator type and the locator itself.
+ */
 public class PropertyFileObjectRepositoryManager implements IObjectRepository {
     // Creating a singleton.
     // This design pattern makes sure that there is ever only ONE instance of this class at any given time.
