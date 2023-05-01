@@ -23,7 +23,7 @@
         <webdrivermanager.version>3.6.2</webdrivermanager.version>
         <rest-assured.version>4.0.0</rest-assured.version>
         <mysql-jdbc.version>8.0.17</mysql-jdbc.version>
-        <testng.version>7.0.0</testng.version>
+        <testng.version>7.7.0</testng.version>
         <hamcrest.version>1.3</hamcrest.version>
         <assertj.version>3.13.2</assertj.version>
         <cucumber-java.version>4.7.1</cucumber-java.version>
